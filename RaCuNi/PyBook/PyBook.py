@@ -3,7 +3,6 @@
 #CLI Ver.
 from builtins import int
 from datetime import datetime
-from test.test_zipimport import NOW
 
 COME = 0
 USE = 0
@@ -16,14 +15,16 @@ def dataLogger():
     
         logdata = open("logdata.txt", 'r')
         logdata.close
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         print("logdata.txt is not exist!")
         
         print("Making new file...")
         
         logdata = open("logdata.txt", 'w')
         
-        logdata.write("now:"+' '+str(NOW))
+        logdata.write("[NOW]\n")
+        logdata.write(str(NOW)+"\n")
+        logdata.write("[END]\n")
         logdata.close
     
     finally:
@@ -51,24 +52,28 @@ def accBook():
                     nowDate = cacDate.strftime('%Y-%m-%d')
                     ld.write("\n")
                     ld.write("["+nowDate+"]"+" "+"+"+" "+str(COME)+" "+"r: "+comeReason)
-                    NOW = COME-USE
+                    #NOW = NOW+COME-USE
                     
-                    
-                with open("logdata.txt", 'r+') as ld:
-                    lines = []
-                    new_line = "now:"+" "+str(NOW)
-                    for line in ld:
-                        if(line.startswith('now:')):
-                            lines = lines +[new_line]
-                        else:
-                            lines = lines + [line]
-                            
-                        ld.seek(0)
-                        ld.writelines(lines)
-                        ld.truncate() 
+                with open("logdata.txt", 'r') as ldread:
+                    ldlines = ldread.readlines()
+
+                #print(ldlines) test line
+                #print(ldlines[0]) test line    
                 
-                       
+                NOW_DATA = ldlines[1]   
+                NOW = int(NOW_DATA)
+                
+                #print(int(NOW_DATA)) test line      
+                NOW = NOW+COME-USE
+                
+                ldlines[1] = str(NOW)+"\n"
+                
+                with open("logdata.txt", 'w') as ldwrite:
+                    ldwrite.writelines(ldlines)
                     
+                #print(ldlines) test line
+                #print(ldlines[0]) test line
+                
             elif a == 2:
                 USE = int(input("enter the num of you've used: \n"))
                 
