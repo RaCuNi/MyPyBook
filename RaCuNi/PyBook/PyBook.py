@@ -1,14 +1,15 @@
 #PyBook Project
 #2018-02-15
-#CLI Ver.
+#CLI Version
 from builtins import int
 from datetime import datetime
 
-COME = 0
-USE = 0
-NOW = 0
+COME = 0 #GLOBAL
+USE = 0 #GLOBAL
+NOW = 0 #GLOBAL
 
 
+#DEF Logging function
 def dataLogger():
     try:
         print("Logging...")
@@ -32,6 +33,32 @@ def dataLogger():
             readLog = log.readline()
             print(readLog)
 
+#DEF Variable NOW function
+def varNOW():
+    with open("logdata.txt", 'r') as ldread:
+                ldlines = ldread.readlines()
+
+                #print(ldlines) test line
+                #print(ldlines[0]) test line    
+                
+                NOW_DATA = ldlines[1]   
+                NOW = int(NOW_DATA)
+                
+                #print(int(NOW_DATA)) test line      
+                NOW = (NOW+COME)-USE
+                
+                ldlines[1] = str(NOW)+"\n"
+                
+                with open("logdata.txt", 'w') as ldwrite:
+                    ldwrite.writelines(ldlines)
+                    
+                #print(ldlines) test line
+                #print(ldlines[0]) test line
+
+
+
+
+#DEF MAIN function
 def accBook():
     global NOW
     global COME
@@ -44,41 +71,34 @@ def accBook():
                 COME = int(input("enter the num of you've earned: \n"))
                 
                 print("You've entered: ", COME, "Won")
-                comeReason = input("Please enter the reason: \n")
+                _COME_Reason = input("Please enter the reason: \n")
                 
                 
-                with open("logdata.txt", 'a') as ld:
+                with open("logdata.txt", 'a') as ldc:
                     cacDate = datetime.now()
                     nowDate = cacDate.strftime('%Y-%m-%d')
-                    ld.write("\n")
-                    ld.write("["+nowDate+"]"+" "+"+"+" "+str(COME)+" "+"r: "+comeReason)
-                    #NOW = NOW+COME-USE
-                    
-                with open("logdata.txt", 'r') as ldread:
-                    ldlines = ldread.readlines()
-
-                #print(ldlines) test line
-                #print(ldlines[0]) test line    
+                    ldc.write("\n")
+                    ldc.write("["+nowDate+"]"+" "+"+"+" "+str(COME)+" "+"r: "+_COME_Reason)
+                    #NOW = NOW+COME-USE #Don't use
                 
-                NOW_DATA = ldlines[1]   
-                NOW = int(NOW_DATA)
-                
-                #print(int(NOW_DATA)) test line      
-                NOW = NOW+COME-USE
-                
-                ldlines[1] = str(NOW)+"\n"
-                
-                with open("logdata.txt", 'w') as ldwrite:
-                    ldwrite.writelines(ldlines)
-                    
-                #print(ldlines) test line
-                #print(ldlines[0]) test line
+                varNOW() #use varNOW
+                COME = 0 #Reset
                 
             elif a == 2:
                 USE = int(input("enter the num of you've used: \n"))
                 
                 print("You've entered: ", USE, "Won")
                 
+                _USE_Reason = input("Please enter the reason: \n")
+                
+                with open("logdata.txt", 'a') as ldu:
+                    cacDate = datetime.now()
+                    nowDate = cacDate.strftime('%Y-%m-%d')
+                    ldu.write("\n")
+                    ldu.write("["+nowDate+"]"+" "+"-"+" "+str(USE)+" "+"r: "+_USE_Reason)
+                
+                varNOW()
+                USE = 0 #Reset
             else:
                 dataLogger().logdata.close
                 print("Nothing Changed! :)")
