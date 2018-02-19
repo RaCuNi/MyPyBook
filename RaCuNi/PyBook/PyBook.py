@@ -75,8 +75,8 @@ def accBook():
                 
                 
                 with open("logdata.txt", 'a') as ldc:
-                    cacDate = datetime.now()
-                    nowDate = cacDate.strftime('%Y-%m-%d')
+                    calcDate = datetime.now()
+                    nowDate = calcDate.strftime('%Y-%m-%d')
                     ldc.write("\n")
                     ldc.write("["+nowDate+"]"+" "+"+"+" "+str(COME)+" "+"r: "+_COME_Reason)
                     #NOW = NOW+COME-USE #Don't use
@@ -92,8 +92,8 @@ def accBook():
                 _USE_Reason = input("Please enter the reason: \n")
                 
                 with open("logdata.txt", 'a') as ldu:
-                    cacDate = datetime.now()
-                    nowDate = cacDate.strftime('%Y-%m-%d')
+                    calcDate = datetime.now()
+                    nowDate = calcDate.strftime('%Y-%m-%d')
                     ldu.write("\n")
                     ldu.write("["+nowDate+"]"+" "+"-"+" "+str(USE)+" "+"r: "+_USE_Reason)
                 
