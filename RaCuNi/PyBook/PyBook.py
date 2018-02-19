@@ -3,29 +3,34 @@
 #CLI Version
 from builtins import int
 from datetime import datetime
+import RaCuNi.PyBook.lang.lang
+from RaCuNi.PyBook.lang.lang import LANG
 
 COME = 0 #GLOBAL
 USE = 0 #GLOBAL
 NOW = 0 #GLOBAL
 
+lang_py = RaCuNi.PyBook.lang.lang
+lang = LANG
+
 
 #DEF Logging function
 def dataLogger():
     try:
-        print("Logging...")
+        print(lang[0][0])
     
         logdata = open("logdata.txt", 'r')
         logdata.close
     except FileNotFoundError:
-        print("logdata.txt is not exist!")
+        print(lang[0][1])
         
-        print("Making new file...")
+        print(lang[0][2])
         
         logdata = open("logdata.txt", 'w')
         
-        logdata.write("[NOW]\n")
+        logdata.write(lang[0][3])
         logdata.write(str(NOW)+"\n")
-        logdata.write("[END]\n")
+        logdata.write(lang[0][4])
         logdata.close
     
     finally:
@@ -55,42 +60,43 @@ def accBook():
     global USE
     
     while True:
-        a = int(input("What do you wanna do? \n Type that 1 or 2: \n"))
+        a = int(input(lang[0][5]))
         if type(a) == int:
             if a == 1:
-                COME = int(input("enter the num of you've earned: \n"))
+                COME = int(input(lang[0][6])) #Earn
                 
-                print("You've entered: ", COME, "Won")
-                _COME_Reason = input("Please enter the reason: \n")
+                print(lang[0][7], COME, lang[0][8])
+                _COME_Reason = input(lang[0][9])
                 
                 
                 with open("logdata.txt", 'a') as ldc:
                     calcDate = datetime.now()
                     nowDate = calcDate.strftime('%Y-%m-%d')
                     ldc.write("\n")
-                    ldc.write("["+nowDate+"]"+" "+"+"+" "+str(COME)+" "+"r: "+_COME_Reason)
+                    ldc.write("["+nowDate+"]"+" "+"+"+" "+str(COME)+" "+lang[0][10]+_COME_Reason)
                 
                 varNOW() #use varNOW
                 COME = 0 #Reset
                 
             elif a == 2:
-                USE = int(input("enter the num of you've used: \n"))
+                USE = int(input(lang[0][11])) #Use
                 
-                print("You've entered: ", USE, "Won")
+                print(lang[0][7], USE, lang[0][12])
                 
-                _USE_Reason = input("Please enter the reason: \n")
+                _USE_Reason = input(lang[0][9])
                 
                 with open("logdata.txt", 'a') as ldu:
                     calcDate = datetime.now()
                     nowDate = calcDate.strftime('%Y-%m-%d')
                     ldu.write("\n")
-                    ldu.write("["+nowDate+"]"+" "+"-"+" "+str(USE)+" "+"r: "+_USE_Reason)
+                    ldu.write("["+nowDate+"]"+" "+"-"+" "+str(USE)+" "+lang[0][10]+_USE_Reason)
                 
                 varNOW()
                 USE = 0 #Reset
             else:
                 dataLogger().logdata.close
-                print("Nothing Changed! :)")
+                print(lang[0][13])
             
-dataLogger()
-accBook()
+lang_py.lang() #Language settings
+dataLogger() #Log data
+accBook() #Main function
