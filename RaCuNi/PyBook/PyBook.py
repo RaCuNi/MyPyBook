@@ -36,27 +36,17 @@ def dataLogger():
 #DEF Variable NOW function
 def varNOW():
     with open("logdata.txt", 'r') as ldread:
-                ldlines = ldread.readlines()
-
-                #print(ldlines) test line
-                #print(ldlines[0]) test line    
+                ldlines = ldread.readlines()  
                 
                 NOW_DATA = ldlines[1]   
                 NOW = int(NOW_DATA)
-                
-                #print(int(NOW_DATA)) test line      
+                   
                 NOW = (NOW+COME)-USE
                 
                 ldlines[1] = str(NOW)+"\n"
                 
                 with open("logdata.txt", 'w') as ldwrite:
                     ldwrite.writelines(ldlines)
-                    
-                #print(ldlines) test line
-                #print(ldlines[0]) test line
-
-
-
 
 #DEF MAIN function
 def accBook():
@@ -79,7 +69,6 @@ def accBook():
                     nowDate = calcDate.strftime('%Y-%m-%d')
                     ldc.write("\n")
                     ldc.write("["+nowDate+"]"+" "+"+"+" "+str(COME)+" "+"r: "+_COME_Reason)
-                    #NOW = NOW+COME-USE #Don't use
                 
                 varNOW() #use varNOW
                 COME = 0 #Reset
